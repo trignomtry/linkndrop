@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drop a Link</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0f0f0f;
+            color: #00ff88;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #00ff8877;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        label {
+            margin-left: 0.5rem;
+            margin-right: 1rem;
+        }
+
+        textarea,
+        input[type='number'],
+        input[type='text'] {
+            width: 300px;
+            padding: 0.8rem;
+            background: #000;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 0.7rem 1.5rem;
+            background-color: #00ff88;
+            color: #0f0f0f;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00cc6a;
+        }
+
+        #secret-link {
+            margin-top: 1rem;
+        }
+
+        #error {
+            color: #ff0066;
+            margin-top: 1rem;
+        }
+
+        .glitch {
+            position: relative;
+            color: #00ff88;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            color: #00ff88;
+            background: #0f0f0f;
+        }
+
+        .glitch::before {
+            animation: glitchTop 2s infinite linear;
+            top: -1px;
+            color: #ff00c8;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitchBottom 2s infinite linear;
+            top: 1px;
+            color: #00ffe7;
+            z-index: -2;
+        }
+
+        @keyframes glitchTop {
+            0% {
+                clip-path: inset(0 0 90% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            10% {
+                clip-path: inset(10% 0 80% 0);
+                transform: translate(2px, 2px);
+            }
+
+            20% {
+                clip-path: inset(20% 0 70% 0);
+                transform: translate(-2px, 2px);
+            }
+
+            30% {
+                clip-path: inset(30% 0 60% 0);
+                transform: translate(2px, -2px);
+            }
+
+            40% {
+                clip-path: inset(40% 0 50% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            50% {
+                clip-path: inset(50% 0 40% 0);
+                transform: translate(2px, 2px);
+            }
+
+            60% {
+                clip-path: inset(60% 0 30% 0);
+                transform: translate(-2px, 2px);
+            }
+
+            70% {
+                clip-path: inset(70% 0 20% 0);
+                transform: translate(2px, -2px);
+            }
+
+            80% {
+                clip-path: inset(80% 0 10% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            90% {
+                clip-path: inset(90% 0 0 0);
+                transform: translate(2px, 2px);
+            }
+
+            100% {
+                clip-path: inset(0 0 90% 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes glitchBottom {
+            0% {
+                clip-path: inset(90% 0 0 0);
+                transform: translate(2px, 2px);
+            }
+
+            10% {
+                clip-path: inset(80% 0 10% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            20% {
+                clip-path: inset(70% 0 20% 0);
+                transform: translate(2px, -2px);
+            }
+
+            30% {
+                clip-path: inset(60% 0 30% 0);
+                transform: translate(-2px, 2px);
+            }
+
+            40% {
+                clip-path: inset(50% 0 40% 0);
+                transform: translate(2px, 2px);
+            }
+
+            50% {
+                clip-path: inset(40% 0 50% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            60% {
+                clip-path: inset(30% 0 60% 0);
+                transform: translate(2px, -2px);
+            }
+
+            70% {
+                clip-path: inset(20% 0 70% 0);
+                transform: translate(-2px, 2px);
+            }
+
+            80% {
+                clip-path: inset(10% 0 80% 0);
+                transform: translate(2px, 2px);
+            }
+
+            90% {
+                clip-path: inset(0 0 90% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            100% {
+                clip-path: inset(90% 0 0 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="glitch" data-text="LinkNDrop">LinkNDrop</h1>
+    <form id="myForm">
+        <div>
+            <input type="radio" id="text" name="kind" value="text" checked>
+            <label for="text">Text</label>
+            <input type="radio" id="link" name="kind" value="link">
+            <label for="link">Link</label>
+            <input type="radio" id="image" name="kind" value="image">
+            <label for="image">Image</label>
+        </div>
+        <input type="text" id="from" placeholder="Enter your name (optional)">
+        <textarea type="text" id="textin" placeholder="Enter Text" required></textarea>
+        <input type="number" placeholder="Max. Views (default is 1)" id="views">
+        <button id="create" type="submit">Create Link</button>
+    </form>
+
+    <button id="secret-link" class="hidden">Copy Link</button>
+    <div id="error"></div>
+
+    <script>
+        let kind = "text";
+        const inp = document.getElementById("textin");
+        const error = document.getElementById("error");
+        const views = document.getElementById("views");
+        const finalLink = document.getElementById("secret-link");
+        const from = document.getElementById("from");
+        const radios = document.querySelectorAll('input[name="kind"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', e => {
+                kind = e.target.value;
+                updateInput(kind);
+            });
+        });
+
+        function updateInput(kind) {
+            if (kind == "link") {
+                inp.placeholder = "Paste Link";
+                inp.type = "url";
+            } else if (kind == "text") {
+                inp.placeholder = "Enter Text";
+                inp.type = "text";
+            } else if (kind == "image") {
+                inp.type = "url";
+                inp.placeholder = "Paste Image URL";
+            }
+        }
+
+        document.getElementById("myForm").onsubmit = async function (e) {
+            e.preventDefault();
+            if (!inp.value) {
+                error.innerText = "Please input something in the text box";
+                return;
+            }
+
+            if (kind === "link") {
+                try {
+                    new URL(inp.value);
+                } catch (_) {
+                    error.innerText = "Please enter a valid URL.";
+                    return;
+                }
+            }
+            let req = {};
+            req[kind] = inp.value;
+            if (views.value && parseInt(views.value)) {
+                req.count = parseInt(views.value);
+            }
+            if (from.value) {
+                req.from = from.value;
+            }
+            try {
+                let respo = await fetch("/api/secret", {
+                    method: "POST",
+                    body: JSON.stringify(req)
+                });
+                let json = await respo.json();
+                if (json.link) {
+                    finalLink.classList.remove("hidden");
+                    finalLink.onclick = function () {
+                        const url = `${window.location.origin}/link/`;
+                        navigator.clipboard.writeText(url + json.link);
+                        alert("Copied Link");
+                        finalLink.classList.add("hidden");
+                    };
+                }
+            } catch (e) {
+                error.innerText = "Error saving secret, try again later";
+                console.log("Error: ", e);
+            }
+        }
+    </script>
+</body>
+
+</html>

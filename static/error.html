@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Server Down</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0f0f0f;
+            color: #ff0033;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .glitch {
+            position: relative;
+            color: #ff0033;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            background: #0f0f0f;
+        }
+
+        .glitch::before {
+            animation: glitchTop 2s infinite linear;
+            top: -1px;
+            color: #ff00c8;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitchBottom 2s infinite linear;
+            top: 1px;
+            color: #00ffe7;
+            z-index: -2;
+        }
+
+        @keyframes glitchTop {
+            0% {
+                clip-path: inset(0 0 90% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            50% {
+                clip-path: inset(40% 0 50% 0);
+                transform: translate(2px, 2px);
+            }
+
+            100% {
+                clip-path: inset(0 0 90% 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes glitchBottom {
+            0% {
+                clip-path: inset(90% 0 0 0);
+                transform: translate(2px, 2px);
+            }
+
+            50% {
+                clip-path: inset(60% 0 30% 0);
+                transform: translate(-2px, -2px);
+            }
+
+            100% {
+                clip-path: inset(90% 0 0 0);
+                transform: translate(0, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="glitch" data-text="Our server is down">Sorry, there was an error. Our Server is temporarily down</h1>
+</body>
+
+</html>
